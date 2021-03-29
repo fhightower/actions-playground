@@ -27,4 +27,6 @@ jobs:
           IS_PRERELEASE=$([[ "${{ steps.get-new-version.outputs.version }}" == *-* ]] && echo true || echo false)
           echo "::set-output name=result::$IS_PRERELEASE"
       - name: Echo result
-        run: echo ${{ steps.is-prerelease.outputs.result }}
+        run: |
+          echo ${{ steps.get-new-version.outputs.version }}
+          echo ${{ steps.is-prerelease.outputs.result }}
