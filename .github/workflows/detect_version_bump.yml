@@ -1,19 +1,11 @@
 name: Version Bump merged
 
-on:
-  pull_request:
-    types:
-      - "closed"
-    branches:
-      - "main"
+on: push
 
 jobs:
   trigger-release:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged &&
-        startsWith(github.head_ref, 'bump_version_to_') &&
-        startsWith(github.event.pull_request.title, 'Bump version') &&
-        contains(github.event.pull_request.title, ' → ')
+    if: startsWith(github.head_ref, 'bump_version_to_')
     environment: Create Release
     steps:
       - name: Get new version
