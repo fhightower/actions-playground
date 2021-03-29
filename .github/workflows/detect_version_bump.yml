@@ -5,13 +5,13 @@ on: push
 jobs:
   trigger-release:
     runs-on: ubuntu-latest
-    if: startsWith(github.head_ref, 'bump_version_to_')
+    if: startsWith(github.event.head_commit.message, 'bump_version_to_')
     environment: Create Release
     steps:
       - name: Get new version
         id: get-new-version
         run: |
-          NEW_VERSION=$(echo ${{ github.head_ref }} | cut -d _ -f4 )
+          NEW_VERSION=$(echo ${{ github.event.head_commit.message }} | cut -d _ -f4 )
           echo "::set-output name=version::$NEW_VERSION"
       - name: Is prerelease?
         id: is-prerelease
