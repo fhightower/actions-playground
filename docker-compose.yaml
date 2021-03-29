@@ -45,3 +45,4 @@ services:
     <<: *mkdocs
     <<: *mount-app-and-user-git-config
     entrypoint: "mike"
+
