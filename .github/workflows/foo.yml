@@ -1,0 +1,29 @@
+name: My Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Execute Template
+        uses: ./.github/templates/my-template.yml
+
+  job2:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Execute Template
+        uses: ./.github/templates/my-template.yml
+
+

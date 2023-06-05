@@ -1,0 +1,13 @@
+# /.github/templates/my-template.yml
+
+steps:
+  - name: Step 1
+    run: echo "Running step 1"
+
+  - name: Step 2
+    run: echo "Running step 2"
+
+  - name: Step 3
+    run: echo "Running step 3"
+
+
