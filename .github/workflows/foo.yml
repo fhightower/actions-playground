@@ -5,6 +5,17 @@ on:
     branches:
       - main
 
+# Define the reusable steps as an anchor
+myTemplate:
+  - name: Step 1
+    run: echo "Running step 1"
+
+  - name: Step 2
+    run: echo "Running step 2"
+
+  - name: Step 3
+    run: echo "Running step 3"
+
 jobs:
   job1:
     runs-on: ubuntu-latest
@@ -13,8 +24,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Execute Template
-        uses: ./.github/templates/my-template
+      - <<: *myTemplate
 
   job2:
     runs-on: ubuntu-latest
@@ -23,7 +33,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Execute Template
-        uses: ./.github/templates/my-template
+      - <<: *myTemplate
 
 
