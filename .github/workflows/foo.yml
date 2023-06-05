@@ -24,8 +24,7 @@ jobs:
 
       - <<: *myTemplate
 
-# Define the reusable steps as an anchor
-myTemplate:
+myTemplate: &myTemplate
   - name: Step 1
     run: echo "Running step 1"
 
