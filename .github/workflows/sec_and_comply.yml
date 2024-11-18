@@ -23,5 +23,5 @@ jobs:
         run: pip install safety
 
       - name: Run Safety
-        run: safety check --full-report
+        run: safety scan --full-report
 
