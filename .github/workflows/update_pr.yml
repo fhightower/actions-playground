@@ -1,0 +1,43 @@
+name: PR Auto Update
+
+on:
+  pull_request:
+    types: [opened]   # only when PR is created; you could also add "edited" if you want it to re-run
+
+jobs:
+  update-pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Update PR title and body
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const pr = context.payload.pull_request;
+            const branchName = pr.head.ref;
+
+            // Find the prefix
+            const regex = /^(ab-\d+).*$/;
+            const match = branchName.match(regex);
+
+            if (!match) {
+              console.log("Branch name does not match the expected pattern.");
+              return;
+            }
+
+            const newTitle = `[${match[1]}] ${pr.title}`;
+            const newBody = `
+            [${match[1]}]
+
+            ${context.payload.pull_request.body || ''}
+            `;
+
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+              title: newTitle,
+              body: newBody
+            });

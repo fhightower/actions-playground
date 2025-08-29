@@ -1,1 +1,2 @@
 django==2.1.1  # This is an old version of Django which safety will report as vulnerable
+
