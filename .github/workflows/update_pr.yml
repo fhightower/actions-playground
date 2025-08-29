@@ -14,17 +14,23 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const prNumber = context.payload.pull_request.number;
+            const pr = context.payload.pull_request;
+            const branchName = pr.head.ref;
 
-            // Example: prepend "[AUTO]" to the title
-            const newTitle = `[AUTO] ${context.payload.pull_request.title}`;
+            // Find the prefix
+            const regex = /^(ab-\d+).*$/;
+            const match = branchName.match(regex);
 
-            // Example: add a footer to the PR body
+            if (!match) {
+              console.log("Branch name does not match the expected pattern.");
+              return;
+            }
+
+            const newTitle = `[${match[1]}] ${pr.title}`;
             const newBody = `
-            ${context.payload.pull_request.body || ''}
+            [${match[1]}]
 
-            ---
-            _This PR was auto-updated by a GitHub Action._
+            ${context.payload.pull_request.body || ''}
             `;
 
             await github.rest.pulls.update({
